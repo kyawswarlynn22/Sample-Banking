@@ -66,6 +66,13 @@ class BankDetails {
             return (false);
         }
     }
+
+    public void ChangePassword() {
+            String new_pw;
+            System.out.println("Enter your new password: ");
+            new_pw = sc.next();
+            password = new_pw;
+    }
 }
 
 
@@ -87,7 +94,7 @@ public class BankingApp {
 
         do {
             System.out.println("\n  *** Banking System Application ***");
-            System.out.println("1. Display all account details \n 2. Search by Account number \n 3. Deposit the amount \n 4. Withdraw the amount \n 5.Exit ");
+            System.out.println("1. Display all account details \n 2. Search by Account number \n 3. Deposit the amount \n 4. Withdraw the amount \n 5.Change Password \n 6.Exit ");
             System.out.println("Enter your choice: ");
             choice = sc.nextInt();
 
@@ -160,9 +167,30 @@ public class BankingApp {
                         System.out.println("Search failed! Account doesn't exist...!!");
                     }
                     break;
+
+                case 5:
+                    System.out.println("Enter account no.: ");
+                    ac_no = sc.next();
+                    found = false;
+                    for (int i = 0; i < C.length; i++) {
+                        found = C[i].AccountSearch(ac_no);
+                        if (found) {
+                            if (C[i].CheckPassword()) {
+                                C[i].ChangePassword();
+                                break;
+                            } else {
+                                System.out.println("Password incorrect...!!");
+                                break;
+                            }
+                        }
+                    }
+                    if (!found){
+                        System.out.println("Search failed! Account doesn't exist...!!");
+                    }
+                    break;
             }
         }
-        while (choice != 5);
+        while (choice != 6);
 
     }
 }
