@@ -6,6 +6,7 @@ class BankDetails {
     private String name;
     private String account_type;
     private long balance;
+    private String password;
 
     Scanner sc = new Scanner(System.in);
 
@@ -18,6 +19,8 @@ class BankDetails {
         name = sc.next();
         System.out.println("Enter Balance: ");
         balance = sc.nextLong();
+        System.out.println("Enter account password: ");
+        password = sc.next();
     }
 
     public void ShowAccount() {
@@ -48,10 +51,20 @@ class BankDetails {
 
     public boolean AccountSearch(String acc_no) {
         if (account_no.equals(acc_no)) {
-            ShowAccount();
             return (true);
         }
         return (false);
+    }
+
+    public boolean CheckPassword() {
+        String pw;
+        System.out.println("Enter your account password: ");
+        pw = sc.next();
+        if (password.equals(pw)){
+            return (true);
+        }else {
+            return (false);
+        }
     }
 }
 
@@ -92,7 +105,13 @@ public class BankingApp {
                     for (int i = 0; i < C.length; i++) {
                         found = C[i].AccountSearch(ac_no);
                         if (found){
-                            break;
+                            if (C[i].CheckPassword()){
+                                C[i].ShowAccount();
+                                break;
+                            }else {
+                                System.out.println("Password incorrect...!!");
+                                break;
+                            }
                         }
                     }
                     if (!found){
@@ -107,8 +126,13 @@ public class BankingApp {
                     for (int i = 0; i < C.length; i++) {
                         found = C[i].AccountSearch(ac_no);
                         if (found) {
-                            C[i].deposit();
-                            break;
+                            if (C[i].CheckPassword()) {
+                                C[i].deposit();
+                                break;
+                            } else {
+                                System.out.println("Password incorrect...!!");
+                                break;
+                            }
                         }
                     }
                     if (!found){
@@ -123,8 +147,13 @@ public class BankingApp {
                     for (int i = 0; i < C.length; i++) {
                         found = C[i].AccountSearch(ac_no);
                         if (found) {
-                            C[i].Withdrawal();
-                            break;
+                            if (C[i].CheckPassword()) {
+                                C[i].Withdrawal();
+                                break;
+                            } else {
+                                System.out.println("Password incorrect...!!");
+                                break;
+                            }
                         }
                     }
                     if (!found){
